@@ -28,13 +28,16 @@ public class Cliente implements Serializable {
 	private String cpfOucnpj;
 	private Integer tipo;
 	
-	@JsonManagedReference
+	@JsonManagedReference 
 	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();;
 	
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> Telefones = new HashSet<>();
+	
+	@OneToMany(mappedBy="cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Cliente() {
 		
@@ -105,6 +108,14 @@ public class Cliente implements Serializable {
 		Telefones = telefones;
 	}
 
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
