@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.nelioalves.cursomc.domain.Categoria;
+import com.nelioalves.cursomc.dto.CategoriaDTO;
 import com.nelioalves.cursomc.repositories.CategoriaRepository;
 import com.nelioalves.cursomc.services.exception.DateIntegrityException;
 import com.nelioalves.cursomc.services.exception.ObjectNotFoundException;
@@ -55,5 +56,11 @@ public class CategoriaService {
 			   orderBy); 
 	   
 	   return repo.findAll(pageRequest);
+   }
+   
+   //metodo auxiliar Categoria para CategoriaDTO
+   
+   public Categoria fromDTO(CategoriaDTO objDto) {
+	   return new Categoria(objDto.getId(), objDto.getNome());
    }
 }
