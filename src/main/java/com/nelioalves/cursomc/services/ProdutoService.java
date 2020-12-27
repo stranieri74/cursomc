@@ -8,10 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nelioalves.cursomc.domain.Categoria;
 import com.nelioalves.cursomc.domain.Pedido;
 import com.nelioalves.cursomc.domain.Produto;
+import com.nelioalves.cursomc.dto.ProdutoDTO;
 import com.nelioalves.cursomc.repositories.CategoriaRepository;
 import com.nelioalves.cursomc.repositories.ProdutoRepository;
 import com.nelioalves.cursomc.services.exception.ObjectNotFoundException;
@@ -35,8 +37,27 @@ public class ProdutoService {
 		   PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
 				   orderBy); 
 		   List<Categoria> categorias = Categoriarepo.findAllById(ids);
-		return repo.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);
+		return repo.search(nome, categorias, pageRequest);
 		
 	}
+	@Transactional
+	   public Produto insert(Produto obj) {
+		   obj.setId(null);
+		   
+		   obj = repo.save(obj);
+		    
+		   return obj;
+	   }
+	   
 	
+	   public Produto fromDTO(ProdutoDTO objDto) {
+		   Produto prod = new Produto(objDto.getId(), objDto.getNome(), objDto.getPreco());
+		   List<Categoria> cad =   Categoriarepo.findAllById(objDto.getCategoria());
+		   for (Categoria c : cad) {
+			   c.getProdutos().add(prod);
+			   prod.getCategorias().add(c);
+		   }
+		   
+		   return prod;
+	   }
 }

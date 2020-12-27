@@ -88,7 +88,7 @@ public class CursomcApplication implements CommandLineRunner{
 		Produto p11 = new Produto(null, "Shampoo", 90.00);
 		
 		//ligando as listas
-		//categoria com produtos
+		//catego6
 		
 		cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3));
 		cat2.getProdutos().addAll(Arrays.asList(p2, p4));

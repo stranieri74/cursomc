@@ -36,7 +36,6 @@ public class CategoriaResource {
    }
 
      @RequestMapping(method=RequestMethod.POST)
-     //public ResponseEntity<Void> insert(@RequestBody CategoriaDTO objDto){
 	 public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto){
 	   Categoria obj = service.fromDTO(objDto);
     	 obj = service.insert(obj); 
@@ -79,7 +78,6 @@ public class CategoriaResource {
 			   @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			   @RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
 			   @RequestParam(value="direction", defaultValue="ASC") String direction) {
-		// ResponseEntity<?> find(@PathVariable Integer id) { 
 		 Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
 		 Page<CategoriaDTO> listDTO = list.map(obj -> 
 		 new CategoriaDTO(obj));

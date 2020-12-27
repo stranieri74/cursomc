@@ -11,7 +11,17 @@ public class ProdutoDTO implements Serializable{
 	private Integer id;
 	private String nome;
 	private Double preco;
+	private Integer categoria;
 	
+
+	public Integer getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Integer categoria) {
+		this.categoria = categoria;
+	}
+
 	public Integer getId() {
 		return id;
 	}
