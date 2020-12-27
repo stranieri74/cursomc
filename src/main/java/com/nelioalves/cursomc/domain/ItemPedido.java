@@ -13,6 +13,9 @@ public class ItemPedido  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
 	@JsonIgnore //com isso não é serializado
     @EmbeddedId
 	private ItemPedidoPK id = new ItemPedidoPK();
