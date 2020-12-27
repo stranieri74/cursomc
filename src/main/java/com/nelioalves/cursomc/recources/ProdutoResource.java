@@ -37,7 +37,6 @@ public class ProdutoResource {
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		// ResponseEntity<?> find(@PathVariable Integer id) {
 		List<Integer> ids = URL.decodeIntList(categorias);
 		String nomeDecoded = URL.decodeParam(nome);
 		Page<Produto> list = service.findPage(nomeDecoded,ids, page, linesPerPage, orderBy, direction);
