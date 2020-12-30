@@ -80,6 +80,7 @@ public class DBService {
 		Produto p9 = new Produto(null, "abajour", 100.00);
 		Produto p10 = new Produto(null, "Pendente", 180.00);
 		Produto p11 = new Produto(null, "Shampoo", 90.00);
+		Produto p12 = new Produto(null, "bucet", 90.00);
 		
 		//ligando as listas
 		//catego6
@@ -128,7 +129,7 @@ public class DBService {
 	    
 	    categoriaRepository.saveAll(Arrays.asList(cat1, cat2,
 	    		cat3, cat4, cat5, cat6, cat7));
-	    produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p5,p6,p7,p8,p9,p10,p11));
+	    produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p5,p6,p7,p8,p9,p10,p11, p12));
 	    estadoRepository.saveAll(Arrays.asList(est1, est2));
 	    cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 	    clienteRepository.saveAll(Arrays.asList(cli1));
