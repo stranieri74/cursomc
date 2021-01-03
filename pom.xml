@@ -10,10 +10,16 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.nelioalves</groupId>
-	<artifactId>cursomc</artifactId>
+	<artifactId>cursomc1</artifactId>
 	<version>0.0.3-SNAPSHOT</version>
 	<name>cursomc</name>
 	<description>Demo project for Spring Boot</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>11</java.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -84,7 +90,7 @@
 				</configuration>
 
 			</plugin>
-			
+
 			<plugin>
 				<groupId>com.heroku.sdk</groupId>
 				<artifactId>heroku-maven-plugin</artifactId>
