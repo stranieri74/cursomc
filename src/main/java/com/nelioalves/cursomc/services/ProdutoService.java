@@ -24,23 +24,28 @@ public class ProdutoService {
 	@Autowired // automaticamente é instanciada
 	private ProdutoRepository repo;
 	
-	@Autowired // automaticamente é instanciada
-	private CategoriaRepository Categoriarepo;
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 
 	public Produto find(Integer id) {
 		Optional<Produto> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
-	public Page<Produto> findPage(String nome, List<Integer> ids, Integer page, Integer linesPerPage,
+	/*public Page<Produto> findPage(String nome, List<Integer> ids, Integer page, Integer linesPerPage,
 			String orderBy, String direction){
 		   PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
 				   orderBy); 
 		   List<Categoria> categorias = Categoriarepo.findAllById(ids);
 		return repo.search(nome, categorias, pageRequest);
 		
-	}
-	@Transactional
+	}*/
+	
+	public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		List<Categoria> categorias = categoriaRepository.findAllById(ids);
+		return repo.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);	
+	/*@Transactional
 	   public Produto insert(Produto obj) {
 		   obj.setId(null);
 		   
@@ -59,5 +64,6 @@ public class ProdutoService {
 		   }
 		   
 		   return prod;
-	   }
+	   }*/
+	}
 }
