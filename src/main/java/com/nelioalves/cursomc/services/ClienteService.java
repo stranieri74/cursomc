@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,9 @@ public class ClienteService {
 	
 	@Autowired //automaticamente é instanciada
    private ClienteRepository repo;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	@Autowired
 	private EnderecoRepository enderecoRepo;
@@ -80,6 +84,7 @@ public class ClienteService {
 			   objDto.getNome(),
 			   objDto.getEmail(),
 			   null,
+			   null, 
 			   null);
    }
    
@@ -88,7 +93,8 @@ public class ClienteService {
 			   objDto.getNome(),
 			   objDto.getEmail(),
 			   objDto.getCpfOucnpj(),
-			   TipoCliente.toEnum(objDto.getTipo()));
+			   TipoCliente.toEnum(objDto.getTipo()),
+			   pe.encode(objDto.getSenha()));
 	    Cidade cid = new Cidade(objDto.getCidadeId(),null, null);
 	    
 	    Endereco end = new Endereco(null,
