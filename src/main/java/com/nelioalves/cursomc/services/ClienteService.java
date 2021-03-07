@@ -1,10 +1,12 @@
 package com.nelioalves.cursomc.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,7 +46,10 @@ public class ClienteService {
 	private S3Service s3Service;
 	
 	@Autowired
-	private ClienteService clienteService;
+	private ImageService imageService;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefix;
 	
    public Cliente find(Integer id) {
 	   
@@ -53,6 +58,7 @@ public class ClienteService {
 		   && !id.equals(user.getId())) {
 		   throw new AuthorizationException("Acesso Negado");
 	   }
+	   
 	   Optional<Cliente> obj = repo.findById(id);
 	   return obj.orElseThrow(() -> new ObjectNotFoundException(
 			   "Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName())); 
@@ -148,11 +154,12 @@ public class ClienteService {
 	   if(user==null) {
 		   throw new AuthorizationException("Acesso Negado");
 	   }
-	   URI uri = s3Service.uploadFile(multipartFile);
-	   Cliente cli = clienteService.find(user.getId());
-	   cli.setImagemUrl(uri.toString());
-	   repo.save(cli);
-	   return uri;
+	   // instancia a imagem mas chamamos o conversor para jpg
+	   BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+	   //montando nome da imagem
+	   String fileName = prefix + user.getId()+".jpg";
+	   return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+	   
 	   
    }
 }
