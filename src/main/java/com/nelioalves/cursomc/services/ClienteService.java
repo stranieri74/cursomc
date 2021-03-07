@@ -51,6 +51,9 @@ public class ClienteService {
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
 	
+	@Value("${img.profile.size}")
+	private Integer size;
+	
    public Cliente find(Integer id) {
 	   
 	   UserSS user = UserService.authenticated();
@@ -156,6 +159,11 @@ public class ClienteService {
 	   }
 	   // instancia a imagem mas chamamos o conversor para jpg
 	   BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+	   //recortando imagem
+	   jpgImage = imageService.cropSquare(jpgImage);
+	   //redimencionando a qualidade
+	   jpgImage = imageService.resize(jpgImage, size);
+	     
 	   //montando nome da imagem
 	   String fileName = prefix + user.getId()+".jpg";
 	   return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
