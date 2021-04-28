@@ -89,8 +89,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	//permitindo acesso nos andpoints
 	@Bean
 	CorsConfigurationSource CorsCOnfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+	configuration.setAllowedMethods(Arrays.asList("POST","GET","PUT","DELETE","OPTIONS"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+		
+		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
 	
