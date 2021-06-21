@@ -22,12 +22,15 @@ import com.nelioalves.cursomc.domain.Categoria;
 import com.nelioalves.cursomc.dto.CategoriaDTO;
 import com.nelioalves.cursomc.services.CategoriaService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value="/categorias") 
 public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 	
+	 @ApiOperation(value="Busca por id")
 	 @RequestMapping(value="/{id}", method=RequestMethod.GET)
    public
    ResponseEntity<Categoria> find(@PathVariable Integer id) {
@@ -37,7 +40,7 @@ public class CategoriaResource {
    }
 	 //comando para autorizar apenas perfis de admin
 	 @PreAuthorize("hasAnyRole('ADMIN')")
-
+	 @ApiOperation(value="Inseri categoria")
      @RequestMapping(method=RequestMethod.POST)
 	 public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto){
 	   Categoria obj = service.fromDTO(objDto);
@@ -49,6 +52,7 @@ public class CategoriaResource {
 	 }
      
 	 @PreAuthorize("hasAnyRole('ADMIN')")
+	 @ApiOperation(value="Atualiza categorias")
        @RequestMapping(value="/{id}", method=RequestMethod.PUT)
      public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id){
     	   Categoria obj = service.fromDTO(objDto);
@@ -58,6 +62,7 @@ public class CategoriaResource {
      }
      
 	 @PreAuthorize("hasAnyRole('ADMIN')")
+	 @ApiOperation(value="Apaga categorias")
   	 @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
      public
      ResponseEntity<Void> delete(@PathVariable Integer id) {
@@ -67,6 +72,7 @@ public class CategoriaResource {
   	 }
   	 
 	 @RequestMapping(method=RequestMethod.GET)
+	 @ApiOperation(value="Retorna todas categorias")
 	   public
 	   ResponseEntity<List<CategoriaDTO>> findAll() {
 		// ResponseEntity<?> find(@PathVariable Integer id) { 
